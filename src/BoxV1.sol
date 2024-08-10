@@ -5,11 +5,16 @@ import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/Own
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 
-contract BoxV1 is UUPSUpgradeable {
+contract BoxV1 is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     uint256 internal number;
 
     constructor() {
         _disableInitializers();
+    }
+
+    function initialize() public initializer {
+        __Ownable_init(); // sets owner to msg.msg.sender
+        __UUPSUpgradeable_init();
     }
 
     function getNumber() external view returns (uint256) {
